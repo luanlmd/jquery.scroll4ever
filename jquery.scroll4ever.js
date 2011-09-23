@@ -1,6 +1,5 @@
 jQuery.fn.scroll4ever = function(options)
 {
-	var container = $(this);
 	var loading = false;
 	var ended = false;
 	
@@ -13,10 +12,13 @@ jQuery.fn.scroll4ever = function(options)
 	var distance = options['distance'] || 250;
 	var start = options['start'] || function(){};
 	var complete = options['complete'] || function(){};
+	var container = options['container'] || $(this);
 		
+		
+	console.log($(this));
 	log = function(obj)
 	{
-		 if (debug) { console.log('scroll2ever: ' + obj); }
+		 if (debug) { console.log(obj); }
 	}
 	
 	log(url);
@@ -28,20 +30,23 @@ jQuery.fn.scroll4ever = function(options)
 		loading = true;
 		
 		var next = (skip)? skip*page : page;
-		log('loading: ' + next);
-		$.get(url + next, function(data)
+		log('loading: ' + url + next);
+		$.ajax(url + next,{ success:function(data)
 		{
-			log(url+next);
+			
 			if (selector) { data = $(data).find(selector); }
-			
-			container.append(data);
-			page++;
+			//console.log(data);
 			if (!data.length) { ended = true; log('no more data, ended'); }
+			else
+			{
+				container.append(data);
+				page++;
+				$(window).trigger('scroll');
+			}
 			loading = false;
-			
 			complete();
-			$(window).trigger('scroll');
-		});
+			
+		}, dataType:'xml'});
 
 	}
 	
@@ -54,5 +59,4 @@ jQuery.fn.scroll4ever = function(options)
 			}
 		}
 	});
-
 };
