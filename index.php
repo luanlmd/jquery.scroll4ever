@@ -57,6 +57,7 @@ $start = $offset - 20;
 	<body>
 		<h1>Awesome news</h1>
 		<p>Scroll the window to load more and more.</p>
+		<p>Get the code in <a href="https://github.com/luanlmd/jquery.scroll4ever">my GitHub page</a></p>
 		<div class="scroll4ever">
 			<ul>
 				<?php for($x = $start; $x < $offset; $x++) { ?>

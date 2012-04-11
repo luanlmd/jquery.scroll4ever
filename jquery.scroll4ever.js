@@ -14,7 +14,7 @@ jQuery.fn.scroll4ever = function(options)
 
 	log = function(obj)
 	{
-		 if (settings.debug) { console.log(obj); }
+		 if (settings.debug && console.log != undefined) { console.log(obj); }
 	}
 
 	log('initialized');
