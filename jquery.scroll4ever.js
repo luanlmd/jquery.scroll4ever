@@ -1,58 +1,62 @@
-jQuery.fn.scroll4ever = function(options)
-{
-	var settings = $.extend({
-        trigger : false,
-        container: $(this),
-        selector: false,
-        distance : 0,
-        start : function(){},
-        complete : function(){},
-        debug : false
-    }, options);
+(function($){
 
-	var loading = false;
+    $.fn.scroll4ever = function(options)
+    {
+        var settings = $.extend({
+            trigger : false,
+            container: $(this),
+            selector: false,
+            distance : 0,
+            start : function(){},
+            complete : function(){},
+            debug : false
+        }, options);
 
-	log = function(obj)
-	{
-		 if (settings.debug && console.log != undefined) { console.log(obj); }
-	}
+        var loading = false;
 
-	log('initialized');
+        log = function(obj)
+        {
+            if (settings.debug && console.log != undefined) { console.log(obj); }
+        }
 
-	log(settings);
+        log('initialized');
 
-	log($(this));
+        log(settings);
 
-	$(settings.trigger).live('click', function(){
+        log($(this));
 
-		log('running start');
-		settings.start();
-		loading = true;
+        $(settings.trigger).live('click', function(){
 
-		url = $(this).attr('href') + ' ' + settings.selector;
-		div = $('<div />').load(url, function() {
-			$(settings.trigger).remove();
-			$(settings.container).append(div.find('> *'));
+            log('running start');
+            settings.start();
+            loading = true;
 
-			loading = false;
+            url = $(this).attr('href') + ' ' + settings.selector;
+            div = $('<div />').load(url, function() {
+                $(settings.trigger).remove();
+                $(settings.container).append(div.find('> *'));
 
-			log('running complete');
-			settings.complete();
-		});
+                loading = false;
 
-		return false;
-	});
+                log('running complete');
+                settings.complete();
+            });
 
-	if (settings.distance)
-	{
-		$(window).scroll(function(){
-			if ($(document).scrollTop() >= ($(document).height() - $(window).height() - settings.distance))
-			{
-				if (!loading)
-				{
-					$(settings.trigger).trigger('click');
-				}
-			}
-		});
-	}
-};
+            return false;
+        });
+
+        if (settings.distance)
+        {
+            $(window).scroll(function(){
+                if ($(document).scrollTop() >= ($(document).height() - $(window).height() - settings.distance))
+                {
+                    if (!loading)
+                    {
+                        $(settings.trigger).trigger('click');
+                    }
+                }
+            });
+        }
+    };
+
+})(jQuery);
