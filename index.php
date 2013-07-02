@@ -42,10 +42,10 @@ $start = $offset - 20;
     <script>
     $(document).ready(function()
     {
-        $('body').scroll4ever({
-            trigger:'.next-page-link',
-            container: 'ul',
-            selector:'ul li', // this is the selection made in the source url data
+        $('div').scroll4ever({ //scope element, must NOT be body
+            trigger:'.next-page-link', // link to the next page
+            container: 'ul', // element where next page items are going to be added
+            selector:'ul li', // elements to be added to the page
             distance:100, // distance to the end of window to trigger page load, if avoided, it will not auto trigger
             debug: true, // if you want some messages in console...
             start: function(){ $('.next-page-link').html('Loading...'); }, // callback called when a new page load begins, good for loading messages

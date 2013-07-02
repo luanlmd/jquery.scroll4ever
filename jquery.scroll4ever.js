@@ -1,7 +1,8 @@
 (function($){
-
-    $.fn.scroll4ever = function(options)
+    "use strict";
+    $.fn.scroll4ever = function(options, asd)
     {
+        console.log();
         var settings = $.extend({
             trigger : false,
             container: $(this),
@@ -12,34 +13,28 @@
             debug : false
         }, options);
 
+        var scope = $(this);
         var loading = false;
 
-        log = function(obj)
-        {
-            if (settings.debug && console.log != undefined) { console.log(obj); }
-        }
-
+        var log = function(obj) { if (settings.debug && console.log != undefined) { console.log(obj); } }
         log('initialized');
+        log(scope);
+        log(settings);       
 
-        log(settings);
-
-        log($(this));
-
-        $('body').on('click', settings.trigger, function(){
-
-            log('running start');
+        $(this).on('click', settings.trigger, function(){
+            log('triggered');
             settings.start();
             loading = true;
-
-            url = $(this).attr('href');
-            div = $('<div />').load(url, function() {
-                $(settings.trigger).replaceWith(div.find(settings.trigger));
-                $(settings.container).append(div.find(settings.selector));
+            var url = scope.find(settings.trigger).attr('href');
+            log('requesting: ' + url);
+            $('<div></div>').load(url, function() {
+                var newScope = $(this).find(scope.selector);
+                scope.find(settings.trigger).replaceWith(newScope.find(settings.trigger));
+                scope.find(settings.container).append(newScope.find(settings.selector));
                 loading = false;
-                log('running complete');
+                log('done');
                 settings.complete();
             });
-
             return false;
         });
 
