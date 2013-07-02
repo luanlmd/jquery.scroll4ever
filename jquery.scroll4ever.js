@@ -25,19 +25,17 @@
 
         log($(this));
 
-        $(settings.trigger).live('click', function(){
+        $('body').on('click', settings.trigger, function(){
 
             log('running start');
             settings.start();
             loading = true;
 
-            url = $(this).attr('href') + ' ' + settings.selector;
+            url = $(this).attr('href');
             div = $('<div />').load(url, function() {
-                $(settings.trigger).remove();
-                $(settings.container).append(div.find('> *'));
-
+                $(settings.trigger).replaceWith(div.find(settings.trigger));
+                $(settings.container).append(div.find(settings.selector));
                 loading = false;
-
                 log('running complete');
                 settings.complete();
             });
@@ -47,7 +45,7 @@
 
         if (settings.distance)
         {
-            $(window).scroll(function(){
+            $(window).on('scroll',function(){
                 if ($(document).scrollTop() >= ($(document).height() - $(window).height() - settings.distance))
                 {
                     if (!loading)
