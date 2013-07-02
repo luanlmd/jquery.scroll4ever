@@ -2,7 +2,6 @@
     "use strict";
     $.fn.scroll4ever = function(options, asd)
     {
-        console.log();
         var settings = $.extend({
             trigger : false,
             container: $(this),
