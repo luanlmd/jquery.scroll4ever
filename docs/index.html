@@ -1,30 +1,5 @@
-<?php
-
-// Begin random crap generator
-$words = array('lorem','ipsum','dolor','ftw','sit','amet');
-$news = array();
-function phrase()
-{
-    $phrase = '';
-    for ($x = 0; $x < 5; $x++)
-    {
-        global $words;
-        $phrase .=  $words[rand(0,4)].' ';
-    }
-    return $phrase;
-}
-for ($x = 0; $x < 1000; $x++)
-{
-    $news[] = array($x, phrase());
-}
-// End random crap generator
-
-// Pagination
-$page = (@$_GET['page'])? $_GET['page'] : 1;
-$offset = $page * 20;
-$start = $offset - 20;
-
-?>
+---
+---
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,7 +12,8 @@ $start = $offset - 20;
     li { background: #ccc; display:block; margin:1px; padding:15px; }
     .trigger { padding:5px 10px; background:red; color:black; display:block; margin:20px 0; }
     </style>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="jquery.scroll4ever.js"></script>
     <script>
     $(document).ready(function()
@@ -55,16 +31,16 @@ $start = $offset - 20;
     </script>
 </head>
 <body>
-    <h1>Awesome news</h1>
+    <a href="https://github.com/luanlmd/jquery.scroll4ever"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+    <h1>Awesome random data</h1>
     <p>Scroll the window to load more and more.</p>
-    <p>Get the code in <a href="https://github.com/luanlmd/jquery.scroll4ever">my GitHub page</a></p>
     <div id="scope">
         <ul id="items">
-            <?php for($x = $start; $x < $offset; $x++) { ?>
-            <li class="item"><?= $news[$x][0] ?> - <?= $news[$x][1] ?></li>
-            <?php } ?>
+            {% for item in site.data.items %}
+            <li class="item">{{ item }}</li>
+            {% endfor %}
         </ul>
-        <a class="next-page-link" href="?page=<?= ++$page ?>" rel="next">Load more stuff like that!</a>
+        <a class="next-page-link" href="?page=1" rel="next">Load more stuff like that!</a>
     </div>
 </body>
 </html>
