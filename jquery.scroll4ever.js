@@ -27,7 +27,7 @@
             var url = scope.find(settings.trigger).attr('href');
             log('requesting: ' + url);
             $('<div></div>').load(url, function() {
-                var newScope = $(this).find(scope.selector);
+                var newScope = $(this);
                 scope.find(settings.trigger).replaceWith(newScope.find(settings.trigger));
                 scope.find(settings.container).append(newScope.find(settings.selector));
                 loading = false;
