@@ -1,0 +1,49 @@
+---
+---
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scroll4Ever - jQuery Infinite Scroll plugin</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+    * { margin:0; padding:0; margin:0; }
+    body { padding:20px; }
+    h1, p { margin:10px 0; }
+    li { background: #ccc; display:block; margin:1px; padding:15px; }
+    .trigger { padding:5px 10px; background:red; color:black; display:block; margin:20px 0; }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script-->
+    <script src="jquery.scroll4ever.js"></script>
+    <script>
+    $(document).ready(function()
+    {
+        $('#scope').scroll4ever({ //scope element, must NOT be body
+            trigger:'.next-page-link', // link to the next page
+            container: '#items', // element where next page items are going to be added
+            selector:'.item', // elements to be added to the page
+            distance:100, // distance to the end of window to trigger page load, if avoided, it will not auto trigger
+            debug: true, // if you want some messages in console...
+            start: function(){ $('.next-page-link').html('Loading...'); }, // callback called when a new page load begins, good for loading messages
+            complete: function(){}, // callback called when a new page load ends
+        });
+    });
+    </script>
+</head>
+<body>
+    <a href="https://github.com/luanlmd/jquery.scroll4ever"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+    <h1>Awesome useless list</h1>
+    <p>Scroll to load more.</p>
+    <div id="scope">
+        <ul id="items">
+            {% for item in site.data.items %}
+            <li class="item">{{ item }}</li>
+            {% endfor %}
+        </ul>
+        {% if page.next %}
+        <a class="next-page-link" href="index-{{ page.next }}.html" rel="next">Load more stuff!</a>
+        {% endif %}
+    </div>
+    <p>The End</p>
+</body>
+</html>
